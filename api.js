@@ -28,7 +28,11 @@ MongoClient.connect(url, function(err, db) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Getting a list of blogs according to the required filters
+/*
+ * Getting a list of the 7 latest articles for the "latest" column of the blog
+ * 
+ * GET /latest
+ */
 app.get('/latest', function (req, res) {
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /latest');
 
@@ -42,6 +46,76 @@ app.get('/latest', function (req, res) {
 		}
 	});
 });
+
+/*
+ * Getting a list of the 5 articles matching a page number
+ * 
+ * GET /page?number={id}
+ */
+app.get('/page', function (req, res) {
+
+	var params = req.query;
+	params["__proto__"] = null;
+	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
+
+	if (params.hasOwnProperty("number") && typeof params["number"] === "number") {
+		//Fetching data
+		blogDriver.page("articles", params["number"], function(error, objs) {
+			if (error) { res.send(400, error); }
+			else { 
+				objs.toArray(function (err, articles) {
+					res.send(200, articles);
+				});
+			}
+		});
+	}
+});
+
+/*
+ * Getting the amount of pages available
+ * 
+ * GET /pageCount
+ */
+app.get('/pageCount', function (req, res) {
+	console.log(new Date().toJSON() + ' - [INFO] GET request on /latest');
+
+	//Fetching data
+	blogDriver.articleAmount("articles", function(error, objs) {
+		if (error) { res.send(400, error); }
+		else { 
+			objs.toArray(function (err, amount) {
+				res.send(200, amount / 5);
+			});
+		}
+	});
+});
+
+/*
+ * Getting the full content of a specific article
+ * The "url" data is the one coming from the article preview
+ * 
+ * GET /article?url={url}
+ */
+app.get('/page', function (req, res) {
+
+	var params = req.query;
+	params["__proto__"] = null;
+	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
+
+	if (params.hasOwnProperty("url") && typeof params["url"] === "string") {
+		//Fetching data
+		blogDriver.article("articles", params["url"], function(error, objs) {
+			if (error) { res.send(400, error); }
+			else { 
+				objs.toArray(function (err, article) {
+					res.send(200, article);
+				});
+			}
+		});
+	}
+});
+
+
 
 //Creating the web server
 http.createServer(app).listen(app.get('port'), function() {

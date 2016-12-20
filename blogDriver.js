@@ -12,7 +12,9 @@ BlogDriver.prototype.getCollection = function(collectionName, callback) {
 	});
 };
 
-//Finds objects according to a criteria in the DB
+/*
+ * Gets the latest 7 articles in the DB
+ */
 BlogDriver.prototype.latest = function(collectionName, callback) {
 	this.getCollection(collectionName, function(error, the_collection) {
 		if (error) callback(error);
@@ -25,6 +27,62 @@ BlogDriver.prototype.latest = function(collectionName, callback) {
 
 			//Finding data in the DB
 			the_collection.find(filters, options, function(error, doc) {
+				if (error) callback(error);
+				else callback(null, doc);
+			});
+		}
+	});
+};
+
+/*
+ * Gets the articles matching a page number
+ * This means getting the 5 articles after the first n*5 ones
+ */
+BlogDriver.prototype.page = function(collectionName, pageNumber, callback) {
+	this.getCollection(collectionName, function(error, the_collection) {
+		if (error) callback(error);
+		else {
+
+			var options = {
+				"sort": ['publicationDate', 'asc'],
+				"limit": 5,
+				"skip": pageNumber
+			}
+
+			//Finding data in the DB
+			the_collection.find(filters, options, function(error, doc) {
+				if (error) callback(error);
+				else callback(null, doc);
+			});
+		}
+	});
+};
+
+/*
+ * Gets the total number of articles
+ */
+BlogDriver.prototype.articleAmount = function(collectionName, callback) {
+	this.getCollection(collectionName, function(error, the_collection) {
+		if (error) callback(error);
+		else {
+			//Counting data in the DB
+			the_collection.count(options, function(error, doc) {
+				if (error) callback(error);
+				else callback(null, doc);
+			});
+		}
+	});
+};
+
+/*
+ * Gets the article's detail for a specific article url
+ */
+BlogDriver.prototype.page = function(collectionName, url, callback) {
+	this.getCollection(collectionName, function(error, the_collection) {
+		if (error) callback(error);
+		else {
+			//Finding data in the DB
+			the_collection.findOne({"url": url}, options, function(error, doc) {
 				if (error) callback(error);
 				else callback(null, doc);
 			});
