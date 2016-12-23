@@ -8,7 +8,7 @@ Server = require('mongodb').Server,
 BlogDriver = require('./blogDriver').BlogDriver;
 
 var app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
 var url = 'mongodb://localhost:27017/blog';
 var mongoHost = 'localhost';
