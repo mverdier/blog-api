@@ -58,7 +58,7 @@ app.get('/page', function (req, res) {
 	params["__proto__"] = null;
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
 
-	if (params.["number"] !== false && typeof params["number"] === "number") {
+	if (params["number"] !== false && typeof params["number"] === "number") {
 		//Fetching data
 		blogDriver.page("articles", params["number"], function(error, objs) {
 			if (error) { res.send(400, error); }
