@@ -77,7 +77,7 @@ BlogDriver.prototype.articleAmount = function(collectionName, callback) {
 /*
  * Gets the article's detail for a specific article url
  */
-BlogDriver.prototype.page = function(collectionName, url, callback) {
+BlogDriver.prototype.article = function(collectionName, url, callback) {
 	this.getCollection(collectionName, function(error, the_collection) {
 		if (error) callback(error);
 		else {
