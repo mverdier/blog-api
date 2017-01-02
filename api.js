@@ -58,7 +58,7 @@ app.get('/page', function (req, res) {
 	params["__proto__"] = null;
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
 
-	if (params.hasOwnProperty("number") && typeof params["number"] === "number") {
+	if (params.["number"] !== false && typeof params["number"] === "number") {
 		//Fetching data
 		blogDriver.page("articles", params["number"], function(error, objs) {
 			if (error) { res.send(400, error); }
@@ -77,7 +77,7 @@ app.get('/page', function (req, res) {
  * GET /pageCount
  */
 app.get('/pageCount', function (req, res) {
-	console.log(new Date().toJSON() + ' - [INFO] GET request on /latest');
+	console.log(new Date().toJSON() + ' - [INFO] GET request on /pageCount');
 
 	//Fetching data
 	blogDriver.articleAmount("articles", function(error, objs) {
@@ -96,13 +96,13 @@ app.get('/pageCount', function (req, res) {
  * 
  * GET /article?url={url}
  */
-app.get('/page', function (req, res) {
+app.get('/article', function (req, res) {
 
 	var params = req.query;
 	params["__proto__"] = null;
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
 
-	if (params.hasOwnProperty("url") && typeof params["url"] === "string") {
+	if (params["url"] !== false && typeof params["url"] === "string") {
 		//Fetching data
 		blogDriver.article("articles", params["url"], function(error, objs) {
 			if (error) { res.send(400, error); }
