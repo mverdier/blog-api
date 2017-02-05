@@ -136,6 +136,7 @@ app.get('/get', function (req, res) {
 			});
 		}
 	});
+});
 
 
 
