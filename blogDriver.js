@@ -91,7 +91,7 @@ BlogDriver.prototype.article = function(collectionName, url, callback) {
 };
 
 //Finds objects according to a criteria in the DB
-BeerDriver.prototype.get = function(collectionName, filters, callback) {
+BlogDriver.prototype.get = function(collectionName, filters, callback) {
 	this.getCollection(collectionName, function(error, the_collection) {
 		if (error) callback(error);
 		else {
