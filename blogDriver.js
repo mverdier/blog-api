@@ -69,7 +69,6 @@ BlogDriver.prototype.articleAmount = function(collectionName, callback) {
 			the_collection.count(function(error, doc) {
 				if (error) callback(error);
 				else {
-					console.log(doc);
 					callback(null, doc);
 				}
 			});
