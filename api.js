@@ -107,7 +107,7 @@ app.get('/article', function (req, res) {
 		blogDriver.article("articles", params["url"], function(error, objs) {
 			if (error) { res.send(400, error); }
 			else { 
-				res.send(200, article);
+				res.send(200, objs);
 			}
 		});
 	}
