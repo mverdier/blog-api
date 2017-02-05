@@ -115,6 +115,28 @@ app.get('/article', function (req, res) {
 	}
 });
 
+/*
+ * Basic GET to try and debug things out
+ */
+app.get('/get', function (req, res) {
+
+	var ip = req.headers['x-forwarded-for'];
+
+	var params = req.query;
+	params["__proto__"] = null;
+
+	console.log(new Date().toJSON() + ' - [INFO] GET request on /get from IP ' + ip + ' with parameters ' + JSON.stringify(params));
+
+	//Fetching data
+	blogDriver.get("articles", params, function(error, objs) {
+		if (error) { res.send(400, error); }
+		else { 
+			objs.toArray(function (err, articles) {
+				res.send(200, articles);
+			});
+		}
+	});
+
 
 
 //Creating the web server

@@ -90,4 +90,18 @@ BlogDriver.prototype.article = function(collectionName, url, callback) {
 	});
 };
 
+//Finds objects according to a criteria in the DB
+BeerDriver.prototype.get = function(collectionName, filters, callback) {
+	this.getCollection(collectionName, function(error, the_collection) {
+		if (error) callback(error);
+		else {
+			//Finding data in the DB
+			the_collection.find(filters, function(error, doc) {
+				if (error) callback(error);
+				else callback(null, doc);
+			});
+		}
+	});
+};
+
 exports.BlogDriver = BlogDriver;
