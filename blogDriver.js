@@ -66,7 +66,7 @@ BlogDriver.prototype.articleAmount = function(collectionName, callback) {
 		if (error) callback(error);
 		else {
 			//Counting data in the DB
-			the_collection.count(options, function(error, doc) {
+			the_collection.count(function(error, doc) {
 				if (error) callback(error);
 				else callback(null, doc);
 			});
@@ -82,7 +82,7 @@ BlogDriver.prototype.article = function(collectionName, url, callback) {
 		if (error) callback(error);
 		else {
 			//Finding data in the DB
-			the_collection.findOne({"url": url}, options, function(error, doc) {
+			the_collection.findOne({"url": url}, function(error, doc) {
 				if (error) callback(error);
 				else callback(null, doc);
 			});
