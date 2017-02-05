@@ -83,9 +83,7 @@ app.get('/pageCount', function (req, res) {
 	blogDriver.articleAmount("articles", function(error, objs) {
 		if (error) { res.send(400, error); }
 		else { 
-			objs.toArray(function (err, amount) {
-				res.send(200, amount / 5);
-			});
+			res.send(200, objs / 5);
 		}
 	});
 });
