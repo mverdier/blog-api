@@ -94,6 +94,14 @@ BlogDriver.prototype.article = function(collectionName, url, callback) {
 
 //Finds objects according to a criteria in the DB
 BlogDriver.prototype.get = function(collectionName, filters, callback) {
+	
+	//Getting only display: true articles
+	filters.display = true;
+	
+	//Sorting according to the date
+	var options = {};
+	options.sort = ['publicationDate','desc'];
+	
 	this.getCollection(collectionName, function(error, the_collection) {
 		if (error) callback(error);
 		else {
