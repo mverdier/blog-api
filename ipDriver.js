@@ -18,13 +18,13 @@ IpDriver.prototype.increment = function(collectionName, address, endpoint, param
 	this.getCollection(collectionName, function(error, the_collection) {
 		if (error) callback(error);
 		else {
-			this.getCollection(collectionName, function(error, "password") {
+			this.getCollection("password", function(error, passwordCollection) {
 				if (error) callback(error);
 				else {
 					var secret = "";
 					
 					//Getting the hash secret from the DB
-					password.find({"name": "ip"}, function(error, doc) {
+					passwordCollection.find({"name": "ip"}, function(error, doc) {
 						if (error) callback(error);
 						else {
 							doc.toArray(function (err, pw) {
