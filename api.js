@@ -39,6 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/latest', function (req, res) {
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /latest');
 
+	var ip = req.headers['x-forwarded-for'];
+	
 	//Fetching data
 	blogDriver.latest("articles", function(error, objs) {
 		if (error) { res.send(400, error); }
@@ -67,6 +69,7 @@ app.get('/page', function (req, res) {
 	var params = req.query;
 	params["__proto__"] = null;
 	
+	var ip = req.headers['x-forwarded-for'];
 	var number = "";
 	
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
@@ -101,6 +104,8 @@ app.get('/page', function (req, res) {
 app.get('/pageCount', function (req, res) {
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /pageCount');
 
+	var ip = req.headers['x-forwarded-for'];
+	
 	//Fetching data
 	blogDriver.articleAmount("articles", function(error, objs) {
 		if (error) { res.send(400, error); }
@@ -131,6 +136,7 @@ app.get('/article', function (req, res) {
 	params["__proto__"] = null;
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /article with parameters ' + JSON.stringify(params));
 
+	var ip = req.headers['x-forwarded-for'];
 	var url = "";
 	
 	if (params["url"] !== false && typeof params["url"] === "string") {
