@@ -48,7 +48,7 @@ IpDriver.prototype.increment = function(collectionName, address, endpoint, param
 			count['param'] = param;
 
 			//Finding data for this IP address
-			the_collection.find({"ip": address, "endpoint": endpoint, "param": param}, function(error, doc) {
+			the_collection.find({"ip": count['ip'], "endpoint": endpoint, "param": param}, function(error, doc) {
 				if (error) callback(error);
 				else {
 
