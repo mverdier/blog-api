@@ -64,7 +64,7 @@ IpDriver.prototype.increment = function(collectionName, address, endpoint, param
 						}
 					});
 				}
-			}
+			});
 		}
 	});
 };
