@@ -15,6 +15,7 @@ var url = 'mongodb://localhost:27017/blog';
 var mongoHost = 'localhost';
 var mongoPort = 27017; 
 var blogDriver;
+var ipDriver;
 
 //Starting the collection driver linked to our mongo database
 MongoClient.connect(url, function(err, db) {
@@ -25,6 +26,7 @@ MongoClient.connect(url, function(err, db) {
 
 	//Fetching the blog database and both collection drivers
 	blogDriver = new BlogDriver(db);
+	ipDriver = new IpDriver(db);
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
