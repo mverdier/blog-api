@@ -45,6 +45,13 @@ app.get('/latest', function (req, res) {
 			});
 		}
 	});
+	
+	//Incrementing IP request count
+	ipDriver.increment("ip", ip, "latest", "", function(error) {
+		if (error) {
+			console.log(new Date().toJSON() + " - [ERROR] Error while incrementing request count for IP " + ip + ": " + error);
+		}
+	});
 });
 
 /*
@@ -56,6 +63,9 @@ app.get('/page', function (req, res) {
 
 	var params = req.query;
 	params["__proto__"] = null;
+	
+	var number = "";
+	
 	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
 
 	if (params["number"] !== false && typeof params["number"] === "number") {
@@ -68,7 +78,16 @@ app.get('/page', function (req, res) {
 				});
 			}
 		});
+		
+		number = params["number"];
 	}
+	
+	//Incrementing IP request count
+	ipDriver.increment("ip", ip, "page", number, function(error) {
+		if (error) {
+			console.log(new Date().toJSON() + " - [ERROR] Error while incrementing request count for IP " + ip + ": " + error);
+		}
+	});
 });
 
 /*
@@ -88,6 +107,13 @@ app.get('/pageCount', function (req, res) {
 			res.send(200, array);
 		}
 	});
+	
+	//Incrementing IP request count
+	ipDriver.increment("ip", ip, "pageCount", "", function(error) {
+		if (error) {
+			console.log(new Date().toJSON() + " - [ERROR] Error while incrementing request count for IP " + ip + ": " + error);
+		}
+	});
 });
 
 /*
@@ -100,8 +126,10 @@ app.get('/article', function (req, res) {
 
 	var params = req.query;
 	params["__proto__"] = null;
-	console.log(new Date().toJSON() + ' - [INFO] GET request on /page with parameters ' + JSON.stringify(params));
+	console.log(new Date().toJSON() + ' - [INFO] GET request on /article with parameters ' + JSON.stringify(params));
 
+	var url = "";
+	
 	if (params["url"] !== false && typeof params["url"] === "string") {
 		//Fetching data
 		blogDriver.article("articles", params["url"], function(error, objs) {
@@ -110,7 +138,16 @@ app.get('/article', function (req, res) {
 				res.send(200, objs);
 			}
 		});
+		
+		url = params["url"];
 	}
+	
+	//Incrementing IP request count
+	ipDriver.increment("ip", ip, "article", url, function(error) {
+		if (error) {
+			console.log(new Date().toJSON() + " - [ERROR] Error while incrementing request count for IP " + ip + ": " + error);
+		}
+	});
 });
 
 /*
@@ -132,6 +169,13 @@ app.get('/get', function (req, res) {
 			objs.toArray(function (err, articles) {
 				res.send(200, articles);
 			});
+		}
+	});
+	
+	//Incrementing IP request count
+	ipDriver.increment("ip", ip, "get", "", function(error) {
+		if (error) {
+			console.log(new Date().toJSON() + " - [ERROR] Error while incrementing request count for IP " + ip + ": " + error);
 		}
 	});
 });
