@@ -5,7 +5,8 @@ var http = require('http'),
 
 var MongoClient = require('mongodb').MongoClient,
 Server = require('mongodb').Server,
-BlogDriver = require('./blogDriver').BlogDriver;
+BlogDriver = require('./blogDriver').BlogDriver,
+IpDriver = require('./ipDriver').IpDriver;
 
 var app = express();
 app.set('port', process.env.PORT || 3001);
