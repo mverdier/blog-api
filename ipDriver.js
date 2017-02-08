@@ -13,7 +13,7 @@ IpDriver.prototype.getCollection = function(collectionName, callback) {
 };
 
 //Increases the request amount for an IP address
-IpDriver.prototype.increment = function(collectionName, address, callback) {
+IpDriver.prototype.increment = function(collectionName, address, endpoint, param, callback) {
 	this.getCollection(collectionName, function(error, the_collection) {
 		if (error) callback(error);
 		else {
@@ -22,9 +22,11 @@ IpDriver.prototype.increment = function(collectionName, address, callback) {
 			count['count'] = 1;
 			count['ip'] = address;
 			count['latest'] = new Date();
+			count['endpoint'] = endpoint;
+			count['param'] = param;
 
 			//Finding data for this IP address
-			the_collection.find({"ip": address}, function(error, doc) {
+			the_collection.find({"ip": address, "endpoint": endpoint, "param": param}, function(error, doc) {
 				if (error) callback(error);
 				else {
 
