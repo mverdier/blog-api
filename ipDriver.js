@@ -39,33 +39,16 @@ IpDriver.prototype.increment = function(collectionName, address, endpoint, param
 	this.getCollection(collectionName, function(error, the_collection) {
 		if (error) callback(error);
 		else {					
-			var count = {};
+			var ip = {};
 
-			count['count'] = 1;
-			count['ip'] = crypto.createHmac('sha256', secret).update(address).digest('hex');
-			count['latest'] = new Date();
-			count['endpoint'] = endpoint;
-			count['param'] = param;
+			ip['ip'] = crypto.createHmac('sha256', secret).update(address).digest('hex');
+			ip['date'] = new Date();
+			ip['endpoint'] = endpoint;
+			ip['param'] = param;
 
-			//Finding data for this IP address
-			the_collection.find({"ip": count['ip'], "endpoint": endpoint, "param": param}, function(error, doc) {
+			//Saving the data
+			the_collection.save(ip, {w:1}, function(error, doc) {
 				if (error) callback(error);
-				else {
-
-					doc.toArray(function (err, ipCount) {
-
-						//If we already have a count for this IP address
-						if (ipCount.length !== 0 && ipCount[0]['count'] !== undefined) {
-							count['count'] = ipCount[0]['count'] + 1; //Updating our new value to the old one + 1
-							count['_id'] = ipCount[0]['_id']; //Matching the _id field for an update
-						}
-
-						//Saving the new or updated data
-						the_collection.save(count, {w:1}, function(error, doc) {
-							if (error) callback(error);
-						});
-					});
-				}
 			});
 		}
 	});
